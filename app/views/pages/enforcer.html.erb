@@ -1,0 +1,30 @@
+<% content_for :title, "Enforcer | Break the Silence" %>
+
+<h1 class="mb-3">Enforcer: Who Acts on Your Report</h1>
+<p class="lead">Several agencies work together to protect victims and enforce the law.</p>
+
+<div class="row g-4 mt-2">
+  <% [
+    ["Royal Malaysian Police (PDRM)", "Receives reports, investigates, arrests offenders and helps victims apply for protection orders.", "999"],
+    ["Social Welfare Department (JKM)", "Welfare officers assess victims, can issue Emergency Protection Orders, and arrange safe shelter.", "Talian Kasih 15999"],
+    ["Courts", "Issue Interim Protection Orders and Protection Orders, and hear criminal cases against offenders.", "Through police or a lawyer"]
+  ].each do |name, role, how| %>
+    <div class="col-12 col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title"><%= name %></h5>
+          <p class="card-text"><%= role %></p>
+        </div>
+        <div class="card-footer bg-transparent"><small class="text-muted">Contact: <%= how %></small></div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<h2 class="mt-5">How the Process Flows</h2>
+<ol class="list-group list-group-numbered">
+  <li class="list-group-item">Victim or witness reports to the police or Talian Kasih.</li>
+  <li class="list-group-item">Police investigate; welfare officers assess the victim's safety.</li>
+  <li class="list-group-item">Protection order (EPO, IPO or PO) is arranged where needed.</li>
+  <li class="list-group-item">Case proceeds to court if charges are brought.</li>
+</ol>

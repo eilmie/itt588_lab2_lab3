@@ -1,0 +1,118 @@
+:root {
+  --purple: #6c4ab6;
+  --pink: #ff8fc2;
+  --peach: #ffc9a8;
+  --lavender: #f5f0ff;
+  --ink: #2b2250;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, #ffe4f1 0, transparent 40%),
+    radial-gradient(circle at 90% 30%, #e6dcff 0, transparent 45%),
+    radial-gradient(circle at 30% 90%, #ffe9d9 0, transparent 40%),
+    var(--lavender);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand { font-family: "Poppins", sans-serif; }
+
+/* Page titles get a gradient (hero titles stay white) */
+main > h1 {
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--purple), #e0529c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Glass navbar */
+.navbar.bg-purple {
+  background: rgba(91, 58, 140, 0.82) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.navbar .nav-link { border-radius: 2rem; padding: .4rem .9rem !important; transition: background .2s; }
+.navbar .nav-link:hover, .navbar .nav-link.active { background: rgba(255, 255, 255, .18); }
+.navbar form { display: inline; }
+
+/* Hero with soft glowing blobs */
+.hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2rem;
+  background: linear-gradient(135deg, #5b3a8c, #9b5de5 55%, #f15bb5);
+  background-size: 200% 200%;
+  animation: shimmer 12s ease infinite;
+  box-shadow: 0 20px 50px rgba(108, 74, 182, .35);
+}
+.hero::before, .hero::after {
+  content: ""; position: absolute; border-radius: 50%; filter: blur(40px); opacity: .5;
+}
+.hero::before { width: 220px; height: 220px; background: var(--peach); top: -60px; left: -40px; }
+.hero::after  { width: 260px; height: 260px; background: #7ae7ff; bottom: -90px; right: -50px; }
+.hero > * { position: relative; z-index: 1; }
+
+.badge-soft {
+  display: inline-block; padding: .4rem 1rem; margin-bottom: 1rem;
+  border-radius: 2rem; font-size: .85rem; font-weight: 500;
+  background: rgba(255, 255, 255, .2); border: 1px solid rgba(255, 255, 255, .4);
+  backdrop-filter: blur(6px);
+}
+
+/* Glass cards */
+.card {
+  border: 0;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, .72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(91, 58, 140, .10);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.card:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgba(91, 58, 140, .18); }
+.card.border-2 { border: 2px solid !important; }
+
+/* Pill buttons */
+.btn { border-radius: 50rem; font-weight: 600; transition: transform .2s ease, box-shadow .2s ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: linear-gradient(90deg, var(--purple), #9b5de5); border: 0; }
+.btn-primary:hover { box-shadow: 0 8px 20px rgba(108, 74, 182, .4); }
+
+/* Tables and lists */
+.table-responsive, .list-group { border-radius: 1.25rem; overflow: hidden; box-shadow: 0 8px 24px rgba(91, 58, 140, .10); }
+.table { margin-bottom: 0; background: rgba(255, 255, 255, .8); }
+.list-group-item { background: rgba(255, 255, 255, .8); border-color: rgba(108, 74, 182, .08); }
+.alert { border: 0; border-radius: 1rem; }
+
+/* Emergency button gently pulses */
+.hotline-card .btn-danger { animation: pulse 2.4s infinite; }
+
+/* Floating Quick Exit (always reachable, even on mobile) */
+.quick-exit {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 1050;
+  box-shadow: 0 8px 20px rgba(220, 53, 69, .45);
+}
+
+footer.bg-dark { background: linear-gradient(90deg, #2b2250, #4a2f7a) !important; }
+
+/* Scroll reveal (class added by JS) */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@keyframes shimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+@keyframes pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(220, 53, 69, .5); }
+  70%  { box-shadow: 0 0 0 16px rgba(220, 53, 69, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}

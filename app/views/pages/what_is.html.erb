@@ -1,0 +1,68 @@
+<% content_for :title, "What Is Domestic & Gender-Based Violence? | Break the Silence" %>
+
+<section class="hero text-center text-white p-5 mb-5">
+  <span class="badge-soft"><i class="bi bi-heart-fill"></i> Safe space &bull; Free &bull; Confidential</span>
+  <h1 class="display-5 fw-bold">You are not alone.</h1>
+  <p class="lead mb-4">Understanding domestic violence and gender-based violence (GBV) in Malaysia is the first step towards safety and support.</p>
+  <%= link_to "Get Help Now", hotline_path, class: "btn btn-light btn-lg" %>
+</section>
+
+<h2 class="mb-3">What Is Domestic Violence?</h2>
+<p>
+  Domestic violence is a pattern of abusive behaviour by one person to gain or maintain power and control
+  over a family member or intimate partner. It can happen to anyone, regardless of age, gender, religion,
+  income level or education.
+</p>
+
+<h2 class="mt-5 mb-3">What Is Gender-Based Violence (GBV)?</h2>
+<p>
+  Gender-based violence is harm directed at a person because of their gender or gender expectations.
+  It includes domestic violence but also covers harassment, sexual assault, stalking and other forms
+  of abuse that occur at home, at work, in public spaces or online.
+</p>
+
+<h2 class="mt-5 mb-3">Types of Abuse</h2>
+<div class="row g-3">
+  <% [
+    ["Physical",  "Hitting, slapping, choking, pushing or any act that causes bodily harm."],
+    ["Emotional", "Insults, humiliation, threats, isolation from friends and family, or constant criticism."],
+    ["Sexual",    "Any sexual act without consent, including coercion within a marriage or relationship."],
+    ["Economic",  "Controlling money, preventing someone from working, or withholding financial support."],
+    ["Digital",   "Monitoring phones, stalking online, or sharing private images without consent."]
+  ].each do |title, text| %>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title"><%= title %> Abuse</h5>
+          <p class="card-text"><%= text %></p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<h2 class="mt-5 mb-3">Warning Signs</h2>
+<ul class="list-group mb-4">
+  <li class="list-group-item">Frequent unexplained injuries or reluctance to talk about them</li>
+  <li class="list-group-item">Fear of a partner or family member, or constantly seeking their approval</li>
+  <li class="list-group-item">Withdrawal from friends, family or activities once enjoyed</li>
+  <li class="list-group-item">Having little control over money, phone or movements</li>
+  <li class="list-group-item">Sudden changes in mood, confidence or behaviour</li>
+</ul>
+
+<h2 class="mt-5 mb-3">Myths and Facts</h2>
+<div class="table-responsive">
+  <table class="table table-bordered align-middle">
+    <thead class="table-light"><tr><th>Myth</th><th>Fact</th></tr></thead>
+    <tbody>
+      <tr><td>"It is a private family matter."</td><td>Domestic violence is a crime, and everyone has the right to be safe.</td></tr>
+      <tr><td>"Only women are victims."</td><td>Women are most affected, but men and children can be victims too.</td></tr>
+      <tr><td>"If it were that bad, they would just leave."</td><td>Leaving can be dangerous and difficult because of fear, money, children and social pressure.</td></tr>
+      <tr><td>"It is the victim's fault."</td><td>The responsibility for abuse always lies with the abuser.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="alert alert-info mt-4">
+  <strong>Need to talk to someone?</strong> Visit the <%= link_to "Hotline page", hotline_path %> for free and confidential support.
+</div>

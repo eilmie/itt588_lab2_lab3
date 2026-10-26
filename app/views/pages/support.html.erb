@@ -1,0 +1,287 @@
+<% content_for :title, "Support Form | Break the Silence" %>
+
+<h1 class="mb-2">Request Support</h1>
+<p class="lead">Tell us how we can point you to help. <strong>Nothing you type here is sent or stored.</strong></p>
+
+<div class="alert alert-danger">
+  <strong>In immediate danger?</strong> Call <a href="tel:999" class="alert-link">999</a> now. This form is not for emergencies.
+</div>
+
+<div class="row g-4">
+  <div class="col-12 col-lg-7">
+    <div class="card">
+      <div class="card-body p-4">
+        <form id="supportForm" novalidate>
+
+          <div class="mb-3">
+            <label for="nickname" class="form-label">Nickname (not your real name)</label>
+            <input type="text" id="nickname" class="form-control" placeholder="e.g. Sunflower">
+          </div>
+
+          <div class="mb-3">
+            <label for="age" class="form-label">Age</label>
+            <input type="number" id="age" class="form-control" min="1" max="120">
+          </div>
+
+          <div class="mb-3">
+            <label for="contactMethod" class="form-label">Preferred way to get help</label>
+            <select id="contactMethod" class="form-select">
+              <option value="">Choose one...</option>
+              <option value="call">Phone call</option>
+              <option value="whatsapp">WhatsApp</option>
+              <option value="info">Just show me information</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label d-block">Type of support needed</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="helpType" id="helpSafety" value="safety">
+              <label class="form-check-label" for="helpSafety">Safety</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="helpType" id="helpLegal" value="legal">
+              <label class="form-check-label" for="helpLegal">Legal</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="helpType" id="helpEmotional" value="emotional">
+              <label class="form-check-label" for="helpEmotional">Emotional</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="message" class="form-label">Anything you'd like to share (optional)</label>
+            <textarea id="message" class="form-control" rows="3" maxlength="300"></textarea>
+            <div class="form-text"><span id="charCount">0</span> / 300 characters</div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="understand">
+            <label class="form-check-label" for="understand">
+              I understand this is a demo form and no information is sent or saved.
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Get My Support Guide</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-5">
+    <div class="card mb-4">
+      <div class="card-body text-center">
+        <h5 class="mb-1"><i class="bi bi-clock"></i> Malaysia Time</h5>
+        <div id="clock" class="display-6 fw-bold">--:--:--</div>
+        <div id="greeting" class="text-muted"></div>
+      </div>
+    </div>
+
+    <div id="formResult" aria-live="polite"></div>
+  </div>
+</div>
+
+<div class="modal fade" id="supportModal" tabindex="-1" aria-labelledby="supportModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title" id="supportModalLabel">Your guide is ready</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Thank you, <strong id="modalName"></strong>.</p>
+        <ul class="mb-3">
+          <li>Support type: <span id="modalType"></span></li>
+          <li>Preferred contact: <span id="modalContact"></span></li>
+        </ul>
+        <p class="small text-muted mb-0">Nothing was sent or saved. Keep these numbers somewhere safe.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="tel:15999" class="btn btn-primary">Call Talian Kasih 15999</a>
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Date and Time (Malaysia) ----------
+  const MY_TZ = "Asia/Kuala_Lumpur";
+
+  function getMalaysiaHour() {
+    // hourCycle h23 keeps midnight as 0 instead of 24
+    return parseInt(
+      new Date().toLocaleString("en-GB", { timeZone: MY_TZ, hour: "numeric", hourCycle: "h23" }),
+      10
+    );
+  }
+
+  function getGreeting(hour) {
+    // switch + comparison operators decide the greeting
+    switch (true) {
+      case hour >= 5 && hour < 12:
+        return "Good morning";
+      case hour >= 12 && hour < 15:
+        return "Good afternoon";
+      case hour >= 15 && hour < 19:
+        return "Good evening";
+      default:
+        return "Good night";
+    }
+  }
+
+  function updateClock() {
+    const clockEl = document.getElementById("clock");
+    const greetingEl = document.getElementById("greeting");
+
+    // The page may have changed (Turbo navigation), so stop the timer if the clock is gone
+    if (!clockEl) {
+      clearInterval(clockTimer);
+      return;
+    }
+
+    const now = new Date();
+    clockEl.textContent = now.toLocaleTimeString("en-GB", { timeZone: MY_TZ });
+
+    const dateText = now.toLocaleDateString("en-GB", {
+      timeZone: MY_TZ, weekday: "long", day: "numeric", month: "long", year: "numeric"
+    });
+    greetingEl.textContent = getGreeting(getMalaysiaHour()) + " | " + dateText;
+  }
+
+  // ---------- Event Loop: runs every 1000 ms ----------
+  updateClock();
+  const clockTimer = setInterval(updateClock, 1000);
+
+  // ---------- Character counter (event listener) ----------
+  const messageEl = document.getElementById("message");
+  const charCountEl = document.getElementById("charCount");
+
+  messageEl.addEventListener("input", function () {
+    const length = messageEl.value.length;
+    charCountEl.textContent = length;
+
+    // Turn the counter red when close to the limit (ternary operator)
+    charCountEl.style.color = length >= 270 ? "#dc3545" : "";
+  });
+
+    // ---------- Form validation ----------
+  const formEl = document.getElementById("supportForm");
+  const resultEl = document.getElementById("formResult");
+  let lastSubmission = null; // used by the pop-up in Step 4
+
+  // Stops user text from being treated as HTML when we use innerHTML
+  function escapeHTML(text) {
+    return text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function validateForm(data) {
+    const errors = [];
+
+    if (data.nickname.length < 2) {
+      errors.push("Nickname must be at least 2 characters.");
+    }
+    if (data.age === "" || data.age < 1 || data.age > 120) {
+      errors.push("Please enter an age between 1 and 120.");
+    }
+    if (data.contactMethod === "") {
+      errors.push("Please choose how you would like to get help.");
+    }
+    if (!data.helpType) {
+      errors.push("Please select a type of support.");
+    }
+    if (!data.understand) {
+      errors.push("Please tick the box to confirm you understand this is a demo.");
+    }
+    return errors;
+  }
+
+  function getResources(helpType) {
+    // switch statement picks the right list of resources
+    switch (helpType) {
+      case "safety":
+        return ["Emergency: call 999", "Talian Kasih: 15999 (24 hours)", "WAO: +603 3000 8858 (24 hours)"];
+      case "legal":
+        return ["Lodge a police report at the nearest station", "Ask police or a welfare officer about protection orders", "Talian Kasih: 15999"];
+      case "emotional":
+        return ["WAO: +603 3000 8858 (24 hours)", "Befrienders KL: 03-7627 2929 (24 hours)", "AWAM WhatsApp: 016-237 4221"];
+      default:
+        return ["Talian Kasih: 15999"];
+    }
+  }
+
+  function showSummary(data) {
+    const resources = getResources(data.helpType);
+
+    // Loop builds one list item per resource
+    let items = "";
+    for (let i = 0; i < resources.length; i++) {
+      items += "<li class='list-group-item'>" + resources[i] + "</li>";
+    }
+
+    // Extra note when the user is under 18 (logical operators)
+    let ageNote = "";
+    if (data.age < 18 && data.helpType !== "") {
+      ageNote = "<div class='alert alert-info mt-3 mb-0'>Under 18? Talian Kasih (15999) also helps with child abuse.</div>";
+    }
+
+    // innerHTML output method
+    resultEl.innerHTML =
+      "<div class='card border-success border-2'>" +
+        "<div class='card-body'>" +
+          "<h5 class='text-success'>Your Support Guide</h5>" +
+          "<p>Hello, " + escapeHTML(data.nickname) + "! Here is where to start:</p>" +
+          "<ul class='list-group'>" + items + "</ul>" +
+          ageNote +
+        "</div>" +
+      "</div>";
+  }
+
+  formEl.addEventListener("submit", function (event) {
+    event.preventDefault(); // stop the page from reloading
+
+    const checkedRadio = document.querySelector("input[name='helpType']:checked");
+    const data = {
+      nickname: document.getElementById("nickname").value.trim(),
+      age: document.getElementById("age").value === "" ? "" : Number(document.getElementById("age").value),
+      contactMethod: document.getElementById("contactMethod").value,
+      helpType: checkedRadio ? checkedRadio.value : "",
+      message: document.getElementById("message").value.trim(),
+      understand: document.getElementById("understand").checked
+    };
+
+    const errors = validateForm(data);
+
+    if (errors.length > 0) {
+      // console output method
+      console.warn("Validation failed:", errors);
+
+      // window.alert output method
+      window.alert("Please fix the following:\n\n- "
+      + errors.join("\n- "));
+
+      resultEl.innerHTML = "";
+      return;
+    }
+
+    // Success path
+    lastSubmission = data;
+    console.log("Form valid. Nothing is sent or stored. Support type:", data.helpType);
+    showSummary(data);
+
+    setTimeout(function () {
+      document.getElementById("modalName").textContent = data.nickname;
+      document.getElementById("modalType").textContent = data.helpType;
+      document.getElementById("modalContact").textContent = data.contactMethod;
+
+      const modal = new bootstrap.Modal(document.getElementById("supportModal"));
+      modal.show();
+      console.log("Pop-up opened after 600 ms delay");
+    }, 600);
+  });
+
+</script>
